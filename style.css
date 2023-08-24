@@ -11,7 +11,7 @@
   --text-color: #303030;
 
   --hue: 194;
-  --primary-color: hsl(var(--hue),100%, 63%)
+  --primary-color: hsl(var(--hue), 100%, 63%)
 }
 
 body {
@@ -25,25 +25,25 @@ body * {
 }
 
 
-.sr-only{
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: react(0,0,0,0);
+  clip: react(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
 }
 
-#app{
+#app {
   padding: 2rem;
   max-width: 500px;
   margin: 0 auto;
 }
 
-header{
+header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,24 +51,24 @@ header{
   margin: 2.5rem 0;
 }
 
-header h1{
+header h1 {
   font-size: 2rem;
   text-transform: uppercase;
 }
 
-.search{
+.search {
   display: flex;
   align-items: center;
 }
 
-.search input{
+.search input {
   height: 3.2rem;
   border: 1px solid #ccc;
   border-radius: .4rem 0 0 .4rem;
   padding: 0 .8rem;
 }
 
-.search button{
+.search button {
   background-color: var(--primary-color);
   border-radius: 0 .4rem .4rem 0;
   height: 3.2rem;
@@ -78,23 +78,23 @@ header h1{
   cursor: pointer;
 }
 
-.search button:hover{
+.search button:hover {
   filter: brightness(1.1);
 }
 
-table{
+table {
   width: 100%;
   border-collapse: collapse;
 
   box-shadow: 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
 }
 
-table *{
+table * {
   font-size: 1.4rem;
   color: var(--text-color);
 }
 
-table th{
+table th {
   background: var(--primary-color);
   text-align: left;
   font-weight: normal;
@@ -106,21 +106,21 @@ table th:first-child {
   border-top-left-radius: .4rem;
 }
 
-table th:last-child{
+table th:last-child {
   border-top-right-radius: .4rem;
 }
 
 /*São os pares*/
-table tr:last-child{
+table tr:last-child {
   background: #eee;
 }
 
 /*Os odd são impares*/
-table tr:nth-child(odd){
+table tr:nth-child(odd) {
   background: #ddd;
 }
 
-table td{
+table td {
   padding: 1.5rem;
   text-align: left;
 }
@@ -132,7 +132,7 @@ td.user {
 }
 
 
-td.user img{
+td.user img {
   width: 5rem;
   height: 5rem;
 
@@ -140,11 +140,11 @@ td.user img{
   border-radius: 50%;
 }
 
-td.user a{
+td.user a {
   text-decoration: none;
 }
 
-td.user a p{
+td.user a p {
   font-weight: bold;
 }
 
