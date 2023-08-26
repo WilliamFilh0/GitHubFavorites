@@ -21,6 +21,12 @@ export class Favorites {
       }
     ]
   }
+
+  delete(user) {
+    const filteredEntries = this.entries.filter(entry => entry.login !== user.login)
+
+    console.log(filteredEntries)
+  }
 }
 
 //classe que vai criar aa visualização e eventos html 
@@ -28,7 +34,7 @@ export class FavoritesView extends Favorites {
   constructor(root) {
     super(root)
 
-    this.tbody =  this.root.querySelector('table tbody')
+    this.tbody = this.root.querySelector('table tbody')
 
     this.update()
   }
@@ -39,7 +45,7 @@ export class FavoritesView extends Favorites {
 
     this.entries.forEach(user => {
       const row = this.createRow()
-      
+
       row.querySelector('.user img').src = `https://github.com/${user.login}.png`
       row.querySelector('.user img').alt = `Imagem de ${user.name}`
       row.querySelector('.user p').textContent = user.name
@@ -47,9 +53,16 @@ export class FavoritesView extends Favorites {
       row.querySelector('.repositories').textContent = user.public_repos
       row.querySelector('.followers').textContent = user.followers
 
+      row.querySelector('.remove').onclick = () => {
+        const isOk = confirm('Tem certeza que deseja deletar essa linha?')
+        if (isOk) {
+          this.delete(user)
+        }
+      }
+
       this.tbody.append(row)
     })
-    
+
   }
 
   createRow() {
@@ -78,7 +91,7 @@ export class FavoritesView extends Favorites {
   }
 
   removeAllTr() {
-    
+
     this.tbody.querySelectorAll('tr').forEach((tr) => {
       tr.remove()
     })
