@@ -3,7 +3,7 @@ export class GithubUser {
     const endpoint = `https://api.github.com/users/${username}`
 
     return fetch(endpoint)
-    //transformar os dados em JSON.Pra não vir como String
+      //transformar os dados em JSON.Pra não vir como String
       .then(data => data.json())
       .then(({ login, name, public_repos, followers }) => ({
         login,
@@ -29,6 +29,14 @@ export class Favorites {
     this.entries = []
   }
 
+  //Estou avisando que é uma função assíncrona 
+  async add(username){
+    //O wait é espere 
+    const user = await GithubUser.search(username)
+
+    console.log(user)
+  }
+
   delete(user) {
     const filteredEntries = this.entries.filter(entry => entry.login !== user.login)
 
@@ -44,8 +52,21 @@ export class FavoritesView extends Favorites {
 
     this.tbody = this.root.querySelector('table tbody')
 
+    this.onadd()
     this.update()
   }
+
+  //pega o user do input
+  onadd() {
+    const addButton = this.root.querySelector('.search button')
+    addButton.onclick = () => {
+      const { value } = this.root.querySelector('.search input')
+
+      this.add(value)
+    }
+  }
+
+
 
   //Toda vez que mudar um dado vai ser chamado
   update() {
