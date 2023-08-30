@@ -30,11 +30,17 @@ export class Favorites {
   }
 
   //Estou avisando que é uma função assíncrona 
-  async add(username){
-    //O wait é espere 
-    const user = await GithubUser.search(username)
+  async add(username) {
+    try {
+      //O wait é espere 
+      const user = await GithubUser.search(username)
 
-    console.log(user)
+      if (user.login === undefined) {
+        throw new error('Usuário não encontrado! ')
+      }
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   delete(user) {
