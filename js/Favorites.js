@@ -29,6 +29,11 @@ export class Favorites {
     this.entries = []
   }
 
+  //Salvar a aplicação no Local Storage e transformando em String em formato de JSON
+  save(){
+    localStorage.setItem('@github-favorites:', JSON.stringify())
+  }
+
   //Estou avisando que é uma função assíncrona 
   async add(username) {
     try {
@@ -42,17 +47,19 @@ export class Favorites {
       //Em um novo array(imutabilidade) vai colocar um novo usuário que vai ficar no topo 
       this.entries = [user, ...this.entries]
       this.update()
+      this.save()
 
     } catch (error) {
       alert(error.message)
     }
   }
 
+  // remove o usuário da lista
   delete(user) {
     const filteredEntries = this.entries.filter(entry => entry.login !== user.login)
-
     this.entries = filteredEntries
     this.update()
+    this.save()
   }
 }
 
@@ -67,7 +74,7 @@ export class FavoritesView extends Favorites {
     this.update()
   }
 
-  //pega o user do input
+  //Pega o user do input
   onadd() {
     const addButton = this.root.querySelector('.search button')
     addButton.onclick = () => {
