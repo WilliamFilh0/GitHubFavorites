@@ -38,6 +38,11 @@ export class Favorites {
       if (user.login === undefined) {
         throw new error('Usuário não encontrado! ')
       }
+
+      //Em um novo array(imutabilidade) vai colocar um novo usuário que vai ficar no topo 
+      this.entries = [user, ...this.entries]
+      this.update()
+
     } catch (error) {
       alert(error.message)
     }
