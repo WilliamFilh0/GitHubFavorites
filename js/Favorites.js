@@ -1,18 +1,4 @@
-export class GithubUser {
-  static search(username) {
-    const endpoint = `https://api.github.com/users/${username}`
-
-    return fetch(endpoint)
-      //transformar os dados em JSON.Pra não vir como String
-      .then(data => data.json())
-      .then(({ login, name, public_repos, followers }) => ({
-        login,
-        name,
-        public_repos,
-        followers
-      }))
-  }
-}
+import { GithubUser } from "./GithubUser.js"
 
 // classe que vai estruturar a lógica dos dados
 //como os dados vão ser estruturados
@@ -21,27 +7,38 @@ export class Favorites {
     this.root = document.querySelector(root)
     this.load()
 
-    GithubUser.search('maykbrito').then(user => console.log(user))
+   
   }
 
   load() {
-    const entries = JSON.parse(localStorage.getItem('@github-favorites:')) || []
-    this.entries = []
+     this.entries = JSON.parse(localStorage.getItem("@github-favorites")) || []
   }
 
   //Salvar a aplicação no Local Storage e transformando em String em formato de JSON
-  save(){
-    localStorage.setItem('@github-favorites:', JSON.stringify())
+  save() {
+    localStorage.setItem("@github-favorites:", JSON.stringify(this.entries))
   }
+
+  
 
   //Estou avisando que é uma função assíncrona 
   async add(username) {
     try {
+
+      //Se ele retornar verdaadeiro ele pega e vai retorenar o objeto
+      const userExists = this.entries.find(entry => entry.login === username)
+
+      console.log(userExists)
+
+      if (userExists) {
+        throw new error('Usuário ja cadastrado')
+      }
+
       //O wait é espere 
       const user = await GithubUser.search(username)
 
       if (user.login === undefined) {
-        throw new error('Usuário não encontrado! ')
+        throw new Error('Usuário não encontrado! ')
       }
 
       //Em um novo array(imutabilidade) vai colocar um novo usuário que vai ficar no topo 
@@ -57,6 +54,7 @@ export class Favorites {
   // remove o usuário da lista
   delete(user) {
     const filteredEntries = this.entries.filter(entry => entry.login !== user.login)
+
     this.entries = filteredEntries
     this.update()
     this.save()
@@ -95,6 +93,7 @@ export class FavoritesView extends Favorites {
 
       row.querySelector('.user img').src = `https://github.com/${user.login}.png`
       row.querySelector('.user img').alt = `Imagem de ${user.name}`
+      row.querySelector('.user a').href = `https://github.com/${user.login}`
       row.querySelector('.user p').textContent = user.name
       row.querySelector('.user span').textContent = user.login
       row.querySelector('.repositories').textContent = user.public_repos
